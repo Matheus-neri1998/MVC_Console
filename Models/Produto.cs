@@ -29,8 +29,6 @@ namespace MVC_Console.Models
                 Directory.CreateDirectory(pasta);
             }
 
-
-
             // Verificar se o arquivo existe
 
             if (!File.Exists(PATH))
@@ -71,6 +69,7 @@ namespace MVC_Console.Models
 
                 // Passamos para um objeto do tipo Produto
                 Produto prod = new Produto();
+                
                 prod.Codigo = int.Parse( atributos[0] );
                 prod.Nome = atributos[1] ;
                 prod.Preco = float.Parse( atributos[2] );
@@ -82,5 +81,20 @@ namespace MVC_Console.Models
 
             return product;
         }
+
+        public void Inserir(Produto product)
+        {
+        // Criamos um array de linhas para inserir no csv
+        string [] linhas = { PrepararLinhasCSV (product) };
+
+        // Método responsável por inserir linhas em um arquivo
+        File.AppendAllLines(PATH, linhas);
+        }
+        string PrepararLinhasCSV(Produto prod)
+        {
+            return $"{prod.Codigo}; {prod.Nome}; {prod.Preco}";
+        } 
+
+
     }
 }
